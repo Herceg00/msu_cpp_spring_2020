@@ -14,9 +14,7 @@ int main() {
     char *d = allocator.alloc(300); //    Too much memory required, only 200 bytes is available
     char *e = allocator.alloc(0); //    0 bytes allocated
     char *f = allocator.alloc(150); //    Allocated 150 bytes, total alloc usage is 150 bytes
-    char *g = allocator.alloc(-150); //    0 bytes allocated
     char *h = allocator.alloc(50); //    Allocated 50 bytes, total alloc usage is 200 bytes
-    char *j = allocator.alloc(-40); //    0 bytes allocated
     allocator.reset(); //    Reset completed, 200 bytes is available
     char *k = allocator.alloc(-30); //    0 bytes allocated
     char *l = allocator.alloc(30); //    Allocated 30 bytes, total alloc usage is 30 bytes
