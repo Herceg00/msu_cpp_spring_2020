@@ -63,7 +63,7 @@ public:
     const void print_matrix(void) const{
         for(int i = 0;i<n_rows;i++){
             for(int j = 0; j<n_cols;j++){
-                std::cout<<pointer[i][j];
+                std::cout<<pointer[i][j]<<" ";
             }
             std::cout<<std::endl;
         }
@@ -86,8 +86,13 @@ public:
         for (size_t i = 0; i < n_rows; i++) {
             delete[] pointer[i];
         }
-        delete pointer;
+        delete[] pointer;
     }
 
+
+
+
 };
+
+
 #endif //INC_2_MATRIX_H
