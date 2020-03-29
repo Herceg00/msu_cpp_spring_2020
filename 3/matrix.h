@@ -3,22 +3,23 @@
 
 
 class Matrix {
-    int n_rows, n_cols;
+    size_t n_rows, n_cols;
     int **pointer;
 public:
     class row_array{
         int *row_pointer;
-        int n_cols;
+        size_t n_cols;
     public:
-        row_array(int* temp_row, int n_cols):n_cols(n_cols),row_pointer(temp_row){};
-        int& operator[](int i){
+        row_array(int* temp_row, size_t n_cols):n_cols(n_cols),row_pointer(temp_row){};
+        int& operator[](size_t i){
             if (i >=n_cols){
                 throw std::out_of_range("1 axis out of range");
             } else{
                 return row_pointer[i];
             }
         }
-        int operator[](int i) const{
+
+        int operator[](size_t i) const{
             if (i >=n_cols){
                 throw std::out_of_range("1 axis out of range");
             } else{
@@ -26,60 +27,69 @@ public:
             }
         }
     };
-    int get_n_cols(void) {return n_cols;}
-    int get_n_rows(void) {return n_rows;}
-    row_array operator[](int i) const {
+    size_t get_n_cols(void) const  {return n_cols;}
+    size_t get_n_rows(void) const {return n_rows;}
+
+    row_array operator[](size_t i) const {
         if(i >= n_rows){
             throw std::out_of_range("0 axis out of range");
         } else {
             return row_array(pointer[i],n_cols);
         }
     }
-    row_array operator[](int i) {
+
+    row_array operator[](size_t i) {
         if(i >= n_rows){
             throw std::out_of_range("0 axis out of range");
         } else {
             return row_array(pointer[i],n_cols);
         }
     }
-    Matrix(int n_rows,int n_cols):n_cols(n_cols),n_rows(n_rows){
+
+    Matrix(size_t n_rows,size_t n_cols):n_cols(n_cols),n_rows(n_rows){
         pointer = new int*[n_rows];
-        for (int i = 0; i < n_rows; i++) {
+        for (size_t i = 0; i < n_rows; i++) {
             pointer[i] = new int[n_cols];
-            for (int j = 0; j <n_cols ; j++) {
+            for (size_t j = 0; j <n_cols ; j++) {
                 pointer[i][j] = 0;
             }
         }
 
     }
     Matrix& operator*=(const int num){
-        for(int i = 0;i<n_rows;i++){
-            for(int j = 0; j<n_cols;j++){
+        for(size_t i = 0;i<n_rows;i++){
+            for(size_t j = 0; j<n_cols;j++){
                 pointer[i][j] *=num;
             }
         }
+        return *this;
     }
 
     const void print_matrix(void) const{
-        for(int i = 0;i<n_rows;i++){
-            for(int j = 0; j<n_cols;j++){
+        for(size_t i = 0;i<n_rows;i++){
+            for(size_t j = 0; j<n_cols;j++){
                 std::cout<<pointer[i][j]<<" ";
             }
             std::cout<<std::endl;
         }
     }
 
-    const bool operator==(Matrix& m) const {
+    const bool operator==(const Matrix& m) {
         if ((m.get_n_cols()!=n_cols)||(m.get_n_rows()!=n_rows))
             return false;
-        for(int i = 0;i<n_rows;i++){
-            for(int j = 0; j<n_cols;j++){
+        for(size_t i = 0;i<n_rows;i++){
+            for(size_t j = 0; j<n_cols;j++){
                 if(m[i][j]!=pointer[i][j]){
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    const bool operator!=(const Matrix& m)
+    {
+        return !(*this==m);
     }
 
     ~Matrix(){

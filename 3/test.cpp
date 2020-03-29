@@ -10,6 +10,7 @@ int main() {
     m.print_matrix();
     Matrix m1(3,4);
     cout<<(m == m1)<<endl;
+    assert(m!=m1);
     //m[0][5] = 8;  program falls:)
     Matrix m2(3,3);
     m2[0][1] = 1;
