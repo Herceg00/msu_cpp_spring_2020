@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    Matrix m(3,3);
+    const Matrix m(3,3);
     m[0][1] = 1;
     m[2][2] = 14;
     m.print_matrix();
