@@ -33,7 +33,7 @@ public:
 
     size_t get_n_rows(void) const { return n_rows; }
 
-    row_array operator[](size_t i) const {
+    const row_array operator[](size_t i) const {
         if (i >= n_rows) {
             throw std::out_of_range("0 axis out of range");
         } else {
@@ -60,12 +60,13 @@ public:
 
     }
 
-    void operator*=(const int num) const {
+    const Matrix& operator*=(const int num) {
         for (size_t i = 0; i < n_rows; i++) {
             for (size_t j = 0; j < n_cols; j++) {
                 pointer[i][j] *= num;
             }
         }
+        return *this;
     }
 
     const void print_matrix(void) const {

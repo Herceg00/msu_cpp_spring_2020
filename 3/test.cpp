@@ -15,6 +15,7 @@ int main() {
     Matrix m2(3,3);
     m2[0][1] = 1;
     m2[2][2] = 14;
+    m2*=5;
     assert(m == m2); //works
     int x = m[2][2];
     cout<<x<<endl;
