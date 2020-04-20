@@ -1,5 +1,5 @@
 all:
-	g++ main.cpp -o prog
+	g++ test.cpp -o prog
 	./prog
 clear:
 	rm prog
