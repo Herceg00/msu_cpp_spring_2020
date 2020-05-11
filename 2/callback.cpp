@@ -2,10 +2,10 @@
 #include <utility>
 #include "callback.h"
 
-OnBeginEnd BeginFunc = []() { printf("No begin callback\n"); };
-OnBeginEnd EndFunc = []() { printf("No end callback\n"); };
-OnWord WordFunc = [](const char *) { printf("No word callback\n"); };
-OnNumber NumberFunc = [](int) { printf("No number callback\n"); };
+OnBeginEnd BeginFunc = []() {};
+OnBeginEnd EndFunc = []() {};
+OnWord WordFunc = [](const char *) {};
+OnNumber NumberFunc = [](int) {};
 
 void register_on_end_callback(OnBeginEnd callback) {
     EndFunc = std::move(callback);
