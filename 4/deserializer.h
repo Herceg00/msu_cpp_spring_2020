@@ -8,7 +8,6 @@
 #include <istream>
 
 
-
 class Deserializer {
     static constexpr char Separator = ' ';
 public:
@@ -22,14 +21,14 @@ public:
     }
 
     template<class... ArgsT>
-    Error operator()(ArgsT... args) {
+    Error operator()(ArgsT&... args) {
         return process(args...);
     }
 
 private:
     std::istream &in_;
     template<class T, class... Args>
-    Error process(T elem, Args... args) {
+    Error process(T& elem, Args&... args) {
         Error error = process(elem);
         if (error == Error::NoError) {
             return process(args...);
@@ -54,7 +53,7 @@ private:
     Error process(uint64_t &value) {
         std::string text;
         in_ >> text;
-        int64_t num = std::stoi(text);
+        value = std::stoi(text);
         return Error::NoError;
     }
 

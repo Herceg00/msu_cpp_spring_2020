@@ -1,8 +1,7 @@
 #include <iostream>
-#include "type_traits"
 #include "serializer.h"
 #include "deserializer.h"
-#include "assert.h"
+#include <cassert>
 #include "sstream"
 
 
@@ -11,6 +10,7 @@ struct Data
     uint64_t a;
     bool b;
     uint64_t c;
+
     template <class Serializer>
     Error serialize(Serializer& serializer)
     {
@@ -19,15 +19,21 @@ struct Data
 };
 
 int main() {
+    Data x{1, false, 2};
 
-    Data a{1 , false , 4};
     std::stringstream stream;
-    Serializer serializer(stream);
-    serializer.save(a);
-    Data b{1, false , 4};
-    Deserializer deserializer(stream);
-    Error err = deserializer.load(b);
-    Data c{1, true ,4 };
-    assert(a.b != c.b);
 
+    Serializer serializer(stream);
+    serializer.save(x);
+
+    Data y{0, false, 0};
+
+    Deserializer deserializer(stream);
+    const Error err = deserializer.load(y);
+
+    assert(err == Error::NoError);
+
+    assert(x.a == y.a);
+    assert(x.b == y.b);
+    assert(x.c == y.c);
 }
