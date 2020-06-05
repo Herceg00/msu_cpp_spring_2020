@@ -48,13 +48,13 @@ public:
 
     template <class Func, class... Args>
     auto exec(Func func, Args... args){
-        auto problem = std::make_shared<std::packaged_task<decltype(func(args...))()>>([func, args...](){
+        auto shared_problem = std::make_shared<std::packaged_task<decltype(func(args...))()>>([func, args...](){
             return func(args...);});
-        auto res = problem->get_future();
+        auto output = shared_problem->get_future();
         std::unique_lock<std::mutex> lock(mutex);
-        Tasks.push([problem]() {(*problem)();});
+        Tasks.push([shared_problem]() {(*shared_problem)();});
         value.notify_one();
-        return res;
+        return output;
     }
 };
 #endif //INC_8_THREADPOOL_H
